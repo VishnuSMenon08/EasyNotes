@@ -1,0 +1,417 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital@1&display=swap');
+.title{
+    width: 180px;
+    margin:10px;
+    font-family: 'Source Serif Pro', serif;
+    font-size: large;
+    font-weight: 600;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital@1&display=swap');
+.nav-item{
+    width:80px;
+    font-family: 'Source Serif Pro', serif;
+    font-size: medium;
+    font-weight: 600;
+    margin : 2px auto;
+    user-select: initial;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=PT+Serif:wght@700&display=swap');
+.note-title{
+    margin:5px 5px;
+    font-family: 'PT Serif', serif;
+    font-size: small;
+    font-weight: 700;
+    text-align: left;
+    border-bottom: 1px solid rgba(75, 75, 75, 0.378);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Advent+Pro:wght@300&display=swap');
+.note-card-controller{
+    width:95%;
+    font-family: 'Advent Pro', sans-serif;
+    font-size: xx-small;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Advent+Pro:wght@300&display=swap');
+.note{
+    font-family: 'Advent Pro', sans-serif;
+    font-size: xx-small;
+    height: 75px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    margin-left: 5px;
+    overflow: scroll;
+}
+
+body{
+    margin:0px;
+    box-sizing: border-box;
+    background-color: rgba(210, 210, 210, 0.478);
+    display: flex;
+}
+
+.left{
+    float:left;
+}
+.right{
+    float:right;
+}
+.clear{
+    clear:both;
+}
+
+.container{
+    width: 400px;
+}
+
+.title1-span{
+    color: rgb(31, 100, 203);
+}
+
+.title2-span{
+    color: rgb(222, 222, 222);
+}
+.title-container{
+    width:98%;
+    height:40px;
+    margin-left:4px;
+    margin-right:4px;
+    margin-top:4px;
+    background-color: rgba(0, 0, 0, 0.885);
+    border-radius: 3px;
+}
+
+.title-img-container{
+    width:30px;
+    height:30px;
+    overflow: auto;
+    margin-left:20px;
+    margin-top:5px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+}
+
+.title-img-container img{
+    max-width: 100%;
+    max-height: 100%;
+}
+
+
+.create-nav{
+    width:98%;
+    height:40px;
+    margin-left:4px;
+    margin-right:4px;
+    margin-top:2px;
+    border-radius: 3px;
+}
+
+.circle{
+    width:20px;
+    height:20px;
+    margin:4px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.circle:hover{
+    transform: scale(1.2,1.2);
+}
+
+circle:active{
+    border: 1px solid black;
+}
+
+.red{
+    background-color: #d96c53d9;
+}
+.blue{
+    background-color: #3e83ddd9;
+}
+.custom{
+    background-color: #b6c239d9;
+}
+
+.green{
+    background-color: #6ccd6cd9;
+}
+
+/* button class styles  */
+.create{
+    width:30px;
+    height:30px;
+    margin-left:20px;
+    margin-top:5px;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+.create:hover{
+    transform: scale(1.2,1.2);
+}
+
+.create img{
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.clear-area {
+    position: relative;
+    width:55px;
+    height:20px;
+    top: -45px;
+    left: -100px;
+    margin-left:20px;
+    margin-top:5px;
+    margin-bottom: 5px;
+    font-size: x-small;
+    font-weight: bolder;
+    color: rgb(181, 42, 42);
+}
+
+.clear-area:hover{
+    transform: scale(1.2,1.2);
+}
+
+.save-area {
+    position: relative;
+    top: 38px;
+    left: 18px;
+    width:18px;
+    height:18px;
+    margin : 5px;
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+.save-area:hover{
+    transform: scale(1.2,1.2);
+    opacity: 0.2;
+}
+
+.save-area img{
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.close{
+    position: relative;
+    top : 8px;
+    left : -10px;
+    width:18px;
+    height:18px;
+    margin : 5px;
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+.close:hover{
+    transform: scale(1.2,1.2);
+    opacity: 0.2;
+}
+
+.close img{
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* button style classes end  */
+
+/* Note card component styles  */
+
+.notes-board{
+    width:98%;
+    height:500px;
+    margin-left:5px;
+    margin-right:4px;
+    margin-top:2px;
+    margin-bottom: 5px;
+    border-radius: 3px;
+    background-color: bisque;
+    overflow: scroll;
+}
+
+.note-card{
+    width:100px;
+    height: 150px;
+    background-color: rgb(255, 225, 0);
+    opacity: 0.7;
+    margin:10px;
+    border-radius: 2px;
+}
+
+.icon-container{
+    width:15px;
+    height:15px;
+    margin:7px;
+}
+.icon-container img{
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.note-footer{
+    width: 100px;
+    height : 15px;
+
+}
+.note-footer img{
+    width : 10px;
+    height: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.note-footer img:hover{
+    opacity: 0.3;
+}
+
+/* SLider css */
+
+.slide-container {
+    width: 30%;
+    height: 20%;
+    margin-top: 6px;
+    margin-bottom: 5px;
+    margin-left: 95px;
+}
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 5px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    cursor: pointer;
+  }
+  
+  .slider:hover {
+    opacity: 1;
+  }
+  
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    background: #04AA6D;
+    cursor: pointer;
+  }
+  
+  .slider::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    background: #04AA6D;
+    cursor: pointer;
+  }
+
+  /* create notes container styles */
+
+  .add-note-container{
+        position: fixed;
+        /* z-index: 10 !important; */
+        width:392px;
+        height:500px;
+        margin-left:4px;
+        margin-right:4px;
+        margin-top:2px;
+        margin-bottom: 5px;
+        border-radius: 3px;
+        top: 87px;
+        left: 0px;
+        background-color: #ffe4c45b;
+        visibility: hidden;
+  }
+
+  .notes-area{
+    position: relative;
+    /* top : -30px;
+    left : 10px; */
+    margin-top: 3px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    background: linear-gradient(135deg,rgba(251, 251, 251, 0.499),rgba(255, 255, 255, 0.499));
+    width : 92%;
+    height: 75%;
+    /* background-color: rgba(187, 144, 135, 0.499); */
+    opacity: 60%;
+    border-radius: 5px;
+    backdrop-filter: blur(35px);
+  }
+
+  .notes-title{
+    position: relative;
+    /* top : -30px;
+    left : 10px; */
+    background: linear-gradient(135deg,rgba(251, 251, 251, 0.499),rgba(255, 255, 255, 0.499));
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-bottom: 0px;
+    width : 80%;
+    height: 10%;
+    /* background-color: rgba(217, 107, 83, 0.499); */
+    opacity: 60%;
+    border-radius: 5px;
+    backdrop-filter: blur(35px);
+  }
+
+  .arrow {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+  }
+  
+  .rotate-right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+  }
+  
+  .rotate-left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+  }
+
+  /* Edit Control Styles */
+
+  .edit-controls{
+    position: relative;
+    /* background: linear-gradient(135deg,rgba(251, 251, 251, 0.499),rgba(136, 131, 128, 0.499)); */
+    margin-top: 0px;
+    margin-left: 10px;
+    margin-bottom: 0px;
+    width : 82%;
+    height: 6%;
+    /* background-color: #54ab8b9b; */
+    opacity: 60%;
+    border-radius: 5px;
+    /* backdrop-filter: blur(35px); */
+    
+  }
+
+  .control-icon-container{
+    width : 20px;
+    height: 20px;
+    margin: 5px;
+    background: none;
+    border: none;
+    padding: 0;
+    background-color: rgba(249, 249, 249, 0.81);
+    border-radius: 3px;
+    /* user-select: all; */
+    cursor: pointer;
+  }
+
+  .control-icon-container img{
+    display: block;
+  }
+
+  .control-icon-container:hover{
+    transform: scale(1.2,1.2);
+  }
+
+  .control-icon-container:focus{
+    background-color: rgba(136, 136, 136, 0.721);
+  }

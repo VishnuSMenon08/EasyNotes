@@ -1,0 +1,21 @@
+{
+    "name" : "To Do Notes",
+    "version" : "1.0",
+    "description" : "An extension to track your To-Do's of the Day",
+    "icons" :{
+        "16":"icons/notes16.png",
+        "32" : "icons/notes32.png",
+        "48" : "icons/notes48.png",
+        "128": "icons/notes128.png"
+    },
+    // "permissions": [
+    //     "storage"
+    //   ],
+    "manifest_version": 3,
+    "author" : "VSM",
+    "action" : {
+        "default_popup" : "index.html",
+        "default_title" : "To Do Notes"
+    }
+
+}

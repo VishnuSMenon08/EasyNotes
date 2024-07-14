@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css" type="text/css" />
+    <script src="./moduleBundler.js" type="text/javascript"></script>
+    <title>Document</title>
+</head>
+<body>
+<div class="container">
+    <!-- Home Screen View - All Notes and Create -->
+    <div class="home-screen">
+        <!-- Title bar -->
+        <div class="title-container">
+            <div class="title-img-container left">
+                <img src="icons/notes128.png" alt="Notes"/>
+            </div>
+            <div id="notes" class="title left">
+                <span class="title1-span">Easy</span>
+                <span class="title2-span">Notes</span>
+            </div>
+        </div>
+        <!-- Create Options  -->
+        <div class="create-nav clear">
+            <div class="create left">
+                <img src="./icons/plus.png">
+            </div>
+            <div class="slide-container left">
+                <input type="range" min="0" max="16777215" value="50" class="slider" id="myRange">
+            </div>
+            <div id = "R-pane" class="circle right"></div>
+            <div id = "G-pane" class="circle right"></div>
+            <div id = "B-pane" class="circle right"></div>
+            <div id = "C-pane" class="circle right"></div>
+        </div>
+        <!-- Notes Billboard -->
+        <div class="notes-board clear">
+            <div class="note-card left">
+                <div class="note-card-controller">
+                    <p class="title-date left">13-sept-2022</p>
+                    <div class="icon-container right">
+                        <img src="./icons/bookmark.svg" alt="pin"/>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="note-title">
+                    Note 1
+                </div>
+                <div class="note">
+                    This is a sample Note
+                </div>
+            </div>
+
+            <div class="note-card left">
+                <div class="note-card-controller">
+                    <p class="title-date left">13-sept-2022</p>
+                    <div class="icon-container right">
+                        <img src="./icons/bookmark.svg" alt="pin"/>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="note-title">
+                    Note 1
+                </div>
+                <div class="note">
+                    This is a sample Note
+                </div>
+            </div>
+
+            <div class="note-card left">
+                <div class="note-card-controller">
+                    <p class="title-date left">13-sept-2022</p>
+                    <div class="icon-container right">
+                        <img src="./icons/bookmark.svg" alt="pin"/>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="note-title">
+                    Note 1
+                </div>
+                <div class="note">
+                    This is a sample Note
+                    This is a sample Note
+                    This is a sample Note
+                    This is a sample Note
+                    This is a sample Note
+                    This is a sample Note
+                    This is a sample Note
+                    This is a sample Note
+                    This is a sample Note
+                    This is a sample Note
+                    This is a sample Note
+                </div>
+                <div class="note-footer">
+                    <img class = "left" src="./icons/edit.png" alt="edit">
+                    <img class="right" src="./icons/delete.png" alt="delete">
+                </div>
+            </div>
+
+            <div class="note-card left">
+                <div class="note-card-controller">
+                    <p class="title-date left">13-sept-2022</p>
+                    <div class="icon-container right">
+                        <img src="./icons/bookmark.svg" alt="pin"/>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="note-title">
+                    Note 1
+                </div>
+                <div class="note">
+                    This is a sample Note
+                </div>
+            </div>
+
+        </div>
+        <div class="add-note-container">
+            <div class="close right">
+                <img src="./icons/close.png" alt="close">
+            </div>
+            <div class="save-area right">
+                <img src="./icons/save.png" alt="save">
+            </div>
+            <textarea placeholder="Title.." class = "notes-title" name="notes-title" id="notes-title"></textarea>
+            <div class="edit-controls">
+                <button class="control-icon-container left">
+                    <img src="./icons/bold.svg" alt="bold">
+                </button>
+                <button class="control-icon-container left">
+                    <img src="./icons/italic.svg" alt="italic">
+                </button>
+                <button class="control-icon-container left">
+                    <img src="./icons/underline.svg" alt="underline">
+                </button>
+            </div>
+            <textarea placeholder="Notes..."class = "notes-area" name="notes" id="notes-area"></textarea>
+        </div>
+    </div>
+    
+
+
+</div>
+    
+</body>
+</html>
