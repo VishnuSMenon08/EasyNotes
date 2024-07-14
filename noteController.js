@@ -2,7 +2,8 @@ class UiStateController{
     static EVENTS = {
         sliderChange : "slider-change",
         selectColor : "select-color",
-        createNote : "create-note"
+        createNote : "create-note",
+        colorUpdate : "color-update"
     }
     constructor(doc){
         this.document = doc
@@ -13,14 +14,16 @@ class UiStateController{
     initControllers() {
         return {
             "slideController" : new SliderController(this.document),
-            "noteController" : new NoteController(this.document)
+            "noteController" : new NoteController(this.document),
+            "buttonController" : new ButtonController(this.document)
         };
     }
     mapEventControllers(){
         const eventControllerMap = new Map([
             [UiStateController.EVENTS.sliderChange, [this.controllers["slideController"]]],
             [UiStateController.EVENTS.selectColor, [this.controllers["noteController"]]],
-            [UiStateController.EVENTS.createNote, [this.controllers["noteController"]]],
+            [UiStateController.EVENTS.colorUpdate, [this.controllers["noteController"]]],
+            [UiStateController.EVENTS.createNote, [this.controllers["noteController"], this.controllers["buttonController"]]],
 
         ])
         return eventControllerMap
@@ -64,7 +67,8 @@ class SliderController{
 class NoteController {
     static noteControllerEvents = {
         createNote : "create-note",
-        selectColor : "select-color"
+        selectColor : "select-color",
+        colorUpdate : "color-update"
     }
     constructor(doc){
         this.notesBoard = doc.querySelector(".notes-board");
@@ -95,7 +99,8 @@ class NoteController {
     mapEventFunction(){
         const eventFunctionMap = new Map([
             [NoteController.noteControllerEvents.selectColor, this.dispatchColorChange.bind(this)],
-            [NoteController.noteControllerEvents.createNote, this.dispatchCreateNote.bind(this)]
+            [NoteController.noteControllerEvents.createNote, this.dispatchCreateNote.bind(this)],
+            [NoteController.noteControllerEvents.colorUpdate, this.dispatchColorPicker.bind(this)],
         ])
         return eventFunctionMap
     }
@@ -121,7 +126,39 @@ class NoteController {
             item.style.border = null;
         })
     }
+
+    dispatchColorPicker(){
+        this.noteWindow.style.backgroundColor = this.selectedPane.style.backgroundColor
+    }
     
+    dispatch(domEvent, ...eventParams){
+        return this.eventFunctionMap.get(domEvent)(...eventParams)
+    }
+}
+
+class ButtonController{
+    static buttonControlEvents = {
+        createNote : "create-note",
+    }
+    constructor(doc){
+        this.createButton =  doc.querySelector(".create")
+        this.colorPickerButton = doc.querySelector(".change-color")
+        this.eventFunctionMap = this.mapEventFunction()
+        
+    }
+
+    mapEventFunction(){
+        const eventFunctionMap = new Map([
+            [ButtonController.buttonControlEvents.createNote, this.dispatchCreateNote.bind(this)],
+        ])
+        return eventFunctionMap
+    }
+
+    dispatchCreateNote(){
+        this.colorPickerButton.style.visibility = "visible";
+        this.createButton.style.visibility = "hidden";
+    }
+
     dispatch(domEvent, ...eventParams){
         return this.eventFunctionMap.get(domEvent)(...eventParams)
     }

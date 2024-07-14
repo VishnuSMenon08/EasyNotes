@@ -145,6 +145,27 @@ circle:active{
     margin-top:5px;
     margin-bottom: 5px;
     cursor: pointer;
+    visibility: visible;
+}
+
+.change-color{
+    position : absolute;
+    width:28px;
+    height:28px;
+    margin-left:20px;
+    margin-top:5px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    visibility: hidden;
+}
+
+.change-color:hover{
+    transform: scale(1.2,1.2);
+}
+
+.change-color img{
+    max-width: 100%;
+    max-height: 100%;
 }
 
 .create:hover{
@@ -413,5 +434,5 @@ circle:active{
   }
 
   .control-icon-container:focus{
-    background-color: rgba(136, 136, 136, 0.721);
+    background-color: rgba(92, 91, 91, 0.721);
   }

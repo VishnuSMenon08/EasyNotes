@@ -2,6 +2,7 @@
 console.log("HI FROM NOTES APP")
 const createElement = document.querySelector(".create")
 const colorSilder = document.querySelector(".slider")
+const colorPicker = document.querySelector(".change-color")
 const colorSelectors = [
     document.getElementById("R-pane"),
     document.getElementById("G-pane"),
@@ -29,11 +30,17 @@ const createNote = () => {
     uiStateController.dispatchEventControllers('create-note')
 }
 
+const changeNoteColor = () => {
+    uiStateController.dispatchEventControllers("color-update")
+}
+
+
 createElement.addEventListener("click", createNote)
 colorSilder.addEventListener("change", changeColour)
 colorSelectors.forEach((selector) => {selector.addEventListener('click', ()=> {
     selectColor(selector)
 })})
+colorPicker.addEventListener("click", changeNoteColor)
 
 
 // const openCreateWindow = () => {
