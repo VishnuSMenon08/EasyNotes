@@ -3,7 +3,8 @@ class UiStateController{
         sliderChange : "slider-change",
         selectColor : "select-color",
         createNote : "create-note",
-        colorUpdate : "color-update"
+        colorUpdate : "color-update",
+        boldText : "bold-text",
     }
     constructor(doc){
         this.document = doc
@@ -15,7 +16,8 @@ class UiStateController{
         return {
             "slideController" : new SliderController(this.document),
             "noteController" : new NoteController(this.document),
-            "buttonController" : new ButtonController(this.document)
+            "buttonController" : new ButtonController(this.document),
+            "editController" : new EditController(this.document)
         };
     }
     mapEventControllers(){
@@ -24,6 +26,7 @@ class UiStateController{
             [UiStateController.EVENTS.selectColor, [this.controllers["noteController"]]],
             [UiStateController.EVENTS.colorUpdate, [this.controllers["noteController"]]],
             [UiStateController.EVENTS.createNote, [this.controllers["noteController"], this.controllers["buttonController"]]],
+            [UiStateController.EVENTS.boldText, [this.controllers["editController"]]],
 
         ])
         return eventControllerMap
@@ -157,6 +160,59 @@ class ButtonController{
     dispatchCreateNote(){
         this.colorPickerButton.style.visibility = "visible";
         this.createButton.style.visibility = "hidden";
+    }
+
+    dispatch(domEvent, ...eventParams){
+        return this.eventFunctionMap.get(domEvent)(...eventParams)
+    }
+}
+
+class EditController {
+    static editControlEvents = {
+        boldText : "bold-text",
+        italicText : "italic-text",
+        underlineText : "underline-text"
+    }
+    constructor(doc){
+        this.btnBold = doc.getElementById("btn-bold")
+        this.btnItalics = doc.getElementById("btn-italics")
+        this.btnUnderline = doc.getElementById("btn-underline")
+        this.noteWindowArea = doc.querySelector(".notes-area");
+        this.eventFunctionMap = this.mapEventFunction()
+    }
+
+    mapEventFunction(){
+        const eventFunctionMap = new Map([
+            [EditController.editControlEvents.boldText, this.dispatchTextFormatter.bind(this)]
+        ])
+    }
+    dispatchTextFormatter(eventParams){
+        domEvent = eventParams["dom-event"]
+        const formatText = (start, end, text, formattedText) => {
+            const unformatted_txt_1 = text.substring(0, start)
+            const unformatted_txt_2 = text.substring(end)
+            var updatedText = unformatted_txt_1+formattedText?unformatted_txt_1:formattedText
+            updatedText += unformatted_txt_2?unformatted_txt_2:""
+            return updatedText
+
+        }
+        const text = this.noteWindowArea.value
+        const selectionStart = this.noteWindowArea.selectionStart
+        const selectionEnd = this.noteWindowArea.selectionEnd
+        const selectedText = text.substring(selectionStart, selectionEnd);
+        const formattedText = "";
+        switch(domEvent){
+            case EditController.editControlEvents.boldText:
+                formattedText = _applyBold(selectedText)
+                break
+            default:
+                break
+        }
+        this.noteWindowArea.value = formatText(selectionStart, selectionEnd, text, formattedText)
+    }
+
+    _applyBold(text){
+        return text.bold()?text:""
     }
 
     dispatch(domEvent, ...eventParams){
