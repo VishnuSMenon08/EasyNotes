@@ -433,6 +433,6 @@ circle:active{
     transform: scale(1.2,1.2);
   }
 
-  .control-icon-container:focus{
+  .btn-active{
     background-color: rgba(92, 91, 91, 0.721);
   }

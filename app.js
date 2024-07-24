@@ -38,11 +38,27 @@ const createNote = () => {
 const changeNoteColor = () => {
     uiStateController.dispatchEventControllers("color-update")
 }
-const formatBold = () => {
+
+const formatBold = (e) => {
+    e.preventDefault()
     const eventParams = {
         "dom-event" : "bold-text",
     }
     uiStateController.dispatchEventControllers("bold-text", eventParams)
+}
+const formatItalics = (e) => {
+    e.preventDefault()
+    const eventParams = {
+        "dom-event" : "italic-text",
+    }
+    uiStateController.dispatchEventControllers("italic-text", eventParams)
+}
+const formatUnderline = (e) => {
+    e.preventDefault()
+    const eventParams = {
+        "dom-event" : "underline-text",
+    }
+    uiStateController.dispatchEventControllers("underline-text", eventParams)
 }
 
 
@@ -53,6 +69,8 @@ colorSelectors.forEach((selector) => {selector.addEventListener('click', ()=> {
 })})
 colorPicker.addEventListener("click", changeNoteColor)
 editControls["bold"].addEventListener("click", formatBold)
+editControls["italics"].addEventListener("click", formatItalics)
+editControls["underline"].addEventListener("click", formatUnderline)
 
 
 // const openCreateWindow = () => {

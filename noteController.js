@@ -5,6 +5,8 @@ class UiStateController{
         createNote : "create-note",
         colorUpdate : "color-update",
         boldText : "bold-text",
+        italicText : "italic-text",
+        underlineText : "underline-text"
     }
     constructor(doc){
         this.document = doc
@@ -27,6 +29,8 @@ class UiStateController{
             [UiStateController.EVENTS.colorUpdate, [this.controllers["noteController"]]],
             [UiStateController.EVENTS.createNote, [this.controllers["noteController"], this.controllers["buttonController"]]],
             [UiStateController.EVENTS.boldText, [this.controllers["editController"]]],
+            [UiStateController.EVENTS.italicText, [this.controllers["editController"]]],
+            [UiStateController.EVENTS.underlineText, [this.controllers["editController"]]],
 
         ])
         return eventControllerMap
@@ -78,6 +82,7 @@ class NoteController {
         this.noteWindow = doc.querySelector(".add-note-container");
         this.noteWindowTitle = doc.querySelector(".notes-title");
         this.noteWindowArea = doc.querySelector(".notes-area");
+        this.currentNote = null;
         this.initColorSelector(doc)
         this.eventFunctionMap = this.mapEventFunction();
     }
@@ -110,7 +115,7 @@ class NoteController {
 
     dispatchCreateNote(){
         this.noteWindow.style.backgroundColor = this.selectedPane.style.backgroundColor
-        // this.noteWindowTitle.style.backgroundColor = this.selectedPane.style.backgroundColor
+        this.currentNote = new NotesDTO(title=null, content=null, color=this.noteWindow.style.backgroundColor)
         this.toggleBoard(this.noteWindow, this.notesBoard)
 
     }
@@ -174,6 +179,7 @@ class EditController {
         underlineText : "underline-text"
     }
     constructor(doc){
+        this.document = doc
         this.btnBold = doc.getElementById("btn-bold")
         this.btnItalics = doc.getElementById("btn-italics")
         this.btnUnderline = doc.getElementById("btn-underline")
@@ -183,36 +189,47 @@ class EditController {
 
     mapEventFunction(){
         const eventFunctionMap = new Map([
-            [EditController.editControlEvents.boldText, this.dispatchTextFormatter.bind(this)]
+            [EditController.editControlEvents.boldText, this.dispatchTextFormatter.bind(this)],
+            [EditController.editControlEvents.italicText, this.dispatchTextFormatter.bind(this)],
+            [EditController.editControlEvents.underlineText, this.dispatchTextFormatter.bind(this)]
         ])
+        return eventFunctionMap
     }
     dispatchTextFormatter(eventParams){
-        domEvent = eventParams["dom-event"]
-        const formatText = (start, end, text, formattedText) => {
-            const unformatted_txt_1 = text.substring(0, start)
-            const unformatted_txt_2 = text.substring(end)
-            var updatedText = unformatted_txt_1+formattedText?unformatted_txt_1:formattedText
-            updatedText += unformatted_txt_2?unformatted_txt_2:""
-            return updatedText
-
-        }
-        const text = this.noteWindowArea.value
-        const selectionStart = this.noteWindowArea.selectionStart
-        const selectionEnd = this.noteWindowArea.selectionEnd
-        const selectedText = text.substring(selectionStart, selectionEnd);
-        const formattedText = "";
+        const domEvent = eventParams["dom-event"]
         switch(domEvent){
             case EditController.editControlEvents.boldText:
-                formattedText = _applyBold(selectedText)
+                this._applyBold()
+                break
+            case EditController.editControlEvents.italicText:
+                this._applyItalics()
+                break
+            case EditController.editControlEvents.underlineText:
+                this._applyUL()
                 break
             default:
                 break
         }
-        this.noteWindowArea.value = formatText(selectionStart, selectionEnd, text, formattedText)
     }
 
-    _applyBold(text){
-        return text.bold()?text:""
+    _applyBold(){
+        this.toggleActiveClass(this.btnBold)
+        this.noteWindowArea.focus()
+        this.document.execCommand("bold", false, null)
+    }
+    _applyItalics(){
+        this.toggleActiveClass(this.btnItalics)
+        this.noteWindowArea.focus()
+        this.document.execCommand("italic", false, null)
+    }
+    _applyUL(){
+        this.toggleActiveClass(this.btnUnderline)
+        this.noteWindowArea.focus()
+        this.document.execCommand("underline", false, null)
+    }
+
+    toggleActiveClass(btn){
+        btn.classList.contains("btn-active")?btn.classList.remove("btn-active"):btn.classList.add("btn-active")
     }
 
     dispatch(domEvent, ...eventParams){
