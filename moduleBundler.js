@@ -7,5 +7,6 @@ function include(file) {
   }
   
 include("./utils.js");
+include("./dataModels.js");
 include("./noteController.js");
 include("./app.js");

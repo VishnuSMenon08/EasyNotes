@@ -14,6 +14,8 @@ const colorSelectors = [
     document.getElementById("B-pane"),
     document.getElementById("C-pane")
 ]
+const closeNoteBtn = document.querySelector(".close")
+const saveNoteBtn = document.querySelector(".save-area")
 
 const uiStateController = new UiStateController(document)
 
@@ -61,6 +63,15 @@ const formatUnderline = (e) => {
     uiStateController.dispatchEventControllers("underline-text", eventParams)
 }
 
+const closeNote = () => {
+    uiStateController.dispatchEventControllers("close-note")
+}
+
+const saveNote = () => {
+    uiStateController.dispatchEventControllers("save-note")
+}
+
+
 
 createElement.addEventListener("click", createNote)
 colorSilder.addEventListener("change", changeColour)
@@ -72,7 +83,5 @@ editControls["bold"].addEventListener("click", formatBold)
 editControls["italics"].addEventListener("click", formatItalics)
 editControls["underline"].addEventListener("click", formatUnderline)
 
-
-// const openCreateWindow = () => {
-
-// }
+closeNoteBtn.addEventListener("click", closeNote)
+saveNoteBtn.addEventListener("click", saveNote)

@@ -378,6 +378,10 @@ circle:active{
     backdrop-filter: blur(35px);
   }
 
+  .error{
+    border: 1.5px solid rgb(238, 13, 13);
+  }
+
   .arrow {
     border: solid black;
     border-width: 0 3px 3px 0;
