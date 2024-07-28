@@ -8,9 +8,9 @@
         "48" : "icons/notes48.png",
         "128": "icons/notes128.png"
     },
-    // "permissions": [
-    //     "storage"
-    //   ],
+    "permissions": [
+        "storage"
+      ],
     "manifest_version": 3,
     "author" : "VSM",
     "action" : {

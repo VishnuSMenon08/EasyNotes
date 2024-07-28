@@ -152,7 +152,7 @@ class NoteController {
             this.backtrack = null;
             return;
         }
-        this.currentNote.title = this.noteWindowTitle.innerText
+        this.currentNote.title = this.noteWindowTitle.value
         this.currentNote.content = this.noteWindowArea.innerHTML
         this.currentNote.color = this.noteWindow.style.backgroundColor
         try{
