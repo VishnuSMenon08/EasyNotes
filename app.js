@@ -1,4 +1,3 @@
-
 console.log("HI FROM NOTES APP")
 const createElement = document.querySelector(".create")
 const colorSilder = document.querySelector(".slider")
@@ -18,6 +17,7 @@ const closeNoteBtn = document.querySelector(".close")
 const saveNoteBtn = document.querySelector(".save-area")
 
 const uiStateController = new UiStateController(document)
+uiStateController.dispatchStateControllers("on-load");
 
 const changeColour = () => {
     uiStateController.dispatchEventControllers('slider-change')
@@ -85,3 +85,20 @@ editControls["underline"].addEventListener("click", formatUnderline)
 
 closeNoteBtn.addEventListener("click", closeNote)
 saveNoteBtn.addEventListener("click", saveNote)
+chrome.storage.onChanged.addListener((changes, namespace) => {
+    for (let [key, { oldValue, newValue }] of Object.entries(changes)){
+        if(oldValue && !newValue){
+            console.log("DELETE OPERATION")
+        }else if (newValue && !oldValue){
+            console.log("SAVE OPERATION")
+            eventParams = {
+                "key" : key,
+                "value" : newValue
+            }
+            uiStateController.dispatchStateControllers("save-note", eventParams)
+        }else if (newValue && oldValue){
+            console.log("update operation")
+        }
+
+    }
+})

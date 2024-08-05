@@ -1,4 +1,46 @@
-class UiStateController{
+class DataStateController{
+    static STATECHANGES = {
+        saveNote : "save-note",
+        onLoad : "on-load"
+    } 
+    constructor(doc){
+        this.document = doc
+        this.allNotes = this.getAllNotes()
+        this.controllers = this.initControllers(this.document)
+        this.stateControllerMap = this.mapStateControllers()
+    }
+
+    initControllers() {
+        return {
+            "slideController" : new SliderController(this.document),
+            "noteController" : new NoteController(this.document),
+            "buttonController" : new ButtonController(this.document),
+            "editController" : new EditController(this.document),
+            "NoteBoardController" : new NoteBoardController(this.document)
+        };
+    }
+
+    mapStateControllers(){
+        const stateControllerMap = new Map([
+            [DataStateController.STATECHANGES.saveNote, [this.controllers["NoteBoardController"]]],
+            [DataStateController.STATECHANGES.onLoad, [this.controllers["NoteBoardController"]]],
+        ])
+        return stateControllerMap
+    }
+    
+    dispatchStateControllers(stateChange, eventParams){
+        for( var controller of this.stateControllerMap.get(stateChange) ){
+            controller.dispatchStateChange(stateChange, eventParams)
+        }
+
+    }
+
+    getAllNotes(){
+
+    }
+}
+
+class UiStateController extends DataStateController{
     static EVENTS = {
         sliderChange : "slider-change",
         selectColor : "select-color",
@@ -11,19 +53,11 @@ class UiStateController{
         closeNote : "close-note",
     }
     constructor(doc){
+        super(doc)
         this.document = doc
-        this.controllers = this.initControllers(this.document)
         this.eventControllerMap = this.mapEventControllers()
     }
 
-    initControllers() {
-        return {
-            "slideController" : new SliderController(this.document),
-            "noteController" : new NoteController(this.document),
-            "buttonController" : new ButtonController(this.document),
-            "editController" : new EditController(this.document)
-        };
-    }
     mapEventControllers(){
         const eventControllerMap = new Map([
             [UiStateController.EVENTS.sliderChange, [this.controllers["slideController"]]],
@@ -114,19 +148,16 @@ class NoteController {
     }
 
     initColorSelector(doc){
-
         const enforceStyle = (docElement, style) => {
             const currentStyle = docElement.getAttribute("style")
             const updatedStyle = currentStyle?currentStyle+ " "+ style: style
             docElement.setAttribute("style", updatedStyle)
             return docElement
-
         }
         this.custColorPane = enforceStyle(doc.getElementById('C-pane'), "background-color: #b6c239d9;");
         this.redColorPane = enforceStyle(doc.getElementById('R-pane'), "background-color: #d96c53d9;");
         this.greenColorPane = enforceStyle(doc.getElementById('G-pane'),"background-color: #6ccd6cd9;");
         this.blueColorPane = enforceStyle(doc.getElementById('B-pane'), "background-color: #3e83ddd9;");
-
         this.selectedPane = this.redColorPane
     }
 
@@ -143,10 +174,10 @@ class NoteController {
 
     dispatchCreateNote(){
         this.noteWindow.style.backgroundColor = this.selectedPane.style.backgroundColor
-        this.currentNote = new Note({title : null, content : null, color : this.noteWindow.style.backgroundColor})
+        this.currentNote = new Note(null, null, null, this.noteWindow.style.backgroundColor, null)
         this.toggleBoard(this.noteWindow, this.notesBoard)
-
     }
+
     async dispatchSaveNote(eventParams){
         if(eventParams && eventParams["backtrack"]){
             this.backtrack = null;
@@ -173,6 +204,7 @@ class NoteController {
         this._clearNoteWindow()
 
     }
+
     _clearNoteWindow(){
         this.noteWindowTitle.innerHTML = "";
         this.noteWindowArea.innerHTML = "";
@@ -186,7 +218,9 @@ class NoteController {
 
     handleValidationErr(err){
         const fields = {
-            "title" : this.noteWindowTitle
+            "title" : this.noteWindowTitle,
+            "content" : this.noteWindowArea
+
         }
         const sleep = (ms) => {
             return new Promise(resolve => setTimeout(resolve, ms));
@@ -207,6 +241,9 @@ class NoteController {
         switch(err.field){
             case "title":
                 blinkFieldForError(fields["title"])
+                break
+            case "content":
+                blinkFieldForError(fields["content"])
                 break
             default:
                 break
@@ -361,21 +398,83 @@ class EditController {
     }
 }
 
-class NoteTileFactory {
-    constructor (){}
-    createNote(){
-        return new NoteTile
-    }
-}
-class NoteWindowFactory {
-    constructor (){}
-    createNote(){
-        return new NoteWindow()
-    }
-}
+class NoteBoardController{
+    static noteBoardStateChanges = {
+        saveNote : "save-note",
+        onLoad : "on-load"
+    } 
 
-class NoteWindow {
-    constructor(){
+    constructor(doc){
+        this.document = doc;
+        this.notesBoard = doc.querySelector(".notes-board");
+        this.allNotes = []
+        this.allNotesCount = this.allNotes.length
+        this.stateChangeMap = this.mapStateChanges()
+        this.noteTiles = []
+    }
 
+    async readAllNotes(){
+        await Note.readAllNotes().then((allnotesArr) => {
+            this.allNotes = allnotesArr
+        })
+    }
+
+    renderBoard(render){
+        switch(render){
+            case "on-load":
+                for( let note of this.allNotes){
+                    const noteTile = new NoteTile(this.notesBoard, note).createTile(this.document)
+                    this.notesBoard.appendChild(noteTile)
+                    this.noteTiles.push(noteTile)
+                }
+                console.log(this.allNotes)
+                console.log(this.noteTiles)
+                break;
+            case "save-note":
+                const savedNote = this.allNotes[0]
+                const noteTile = new NoteTile(this.notesBoard, savedNote).createTile(this.document)
+                this.notesBoard.prepend(noteTile)
+                this.noteTiles.push(noteTile)
+                break;
+
+            default:
+                break;
+        }
+
+    }
+
+    mapStateChanges(){
+        const stateChangeMap = new Map([
+            [NoteBoardController.noteBoardStateChanges.saveNote, this.dispatchStateSaveNote.bind(this)],
+            [NoteBoardController.noteBoardStateChanges.onLoad, this.dispatchOnLoad.bind(this)],
+        ])
+        return stateChangeMap
+    }
+
+    async dispatchOnLoad(){
+        console.log("ON LOAD STATE CHANGE")
+        await this.readAllNotes()
+        this.renderBoard("on-load");
+    }
+
+    dispatchStateSaveNote(eventParams){
+        console.log("STATE-CHANGE DISPATCHED INSIDE BOARD CONTROLLER")
+        const noteId = eventParams["key"]
+        const noteValue = eventParams["value"]
+        const newNote = new Note(
+            noteId, 
+            noteValue["title"],
+            noteValue["content"],
+            noteValue["color"],
+            noteValue["lastModified"]
+         )
+        this.allNotes.unshift(newNote);
+        this.allNotesCount+=1
+        this.renderBoard("save-note");
+
+    }
+
+    dispatchStateChange(stateChange, eventParams){
+        return this.stateChangeMap.get(stateChange)(eventParams)
     }
 }
